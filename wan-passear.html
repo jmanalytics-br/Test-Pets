@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wan Passear – Banho e Tosa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────
+       VARIÁVEIS
+    ───────────────────────────────────────── */
+    :root {
+      --teal:       #2ABFBF;
+      --teal-dark:  #1a9090;
+      --teal-light: #e0f7f7;
+      --pink:       #F06292;
+      --cream:      #FDF9F4;
+      --charcoal:   #1C1C1E;
+      --mid:        #555563;
+      --shadow:     0 8px 40px rgba(42,191,191,.13);
+    }
+
+    /* ─────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 6vw;
+      background: rgba(253,249,244,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(42,191,191,.15);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--teal-dark);
+      letter-spacing: -.5px;
+    }
+    .nav-logo span { color: var(--pink); font-style: italic; }
+
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--mid);
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .3px;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    .nav-cta {
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 6vw 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 70% 40%, rgba(42,191,191,.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(240,98,146,.08) 0%, transparent 70%),
+        var(--cream);
+    }
+
+    .hero-dots {
+      position: absolute; top: 0; right: 0;
+      width: 55%; height: 100%;
+      background-image: radial-gradient(circle, rgba(42,191,191,.18) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 560px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before { content: "🐾"; font-size: .9rem; }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.05;
+      color: var(--charcoal);
+      margin-bottom: 22px;
+    }
+    h1 em { color: var(--teal); font-style: italic; }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--mid);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .hero-stats { display: flex; gap: 36px; margin-top: 52px; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+    }
+    .stat-label { font-size: .8rem; color: var(--mid); font-weight: 500; }
+
+    /* Hero visual collage */
+    .hero-visual {
+      position: absolute; right: 4vw; top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+      width: min(500px, 44vw);
+    }
+    .hero-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 14px;
+      height: 520px;
+    }
+    .hero-img-grid img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+    .hero-img-grid .tall { grid-row: span 2; }
+
+    .hero-img-pill {
+      position: absolute; bottom: -24px; left: -40px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 14px 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.12);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: float 3s ease-in-out infinite;
+    }
+    .hero-img-pill .stars { color: #f5b700; font-size: 1.1rem; }
+    .hero-img-pill p  { font-size: .82rem; font-weight: 600; color: var(--charcoal); }
+    .hero-img-pill span { font-size: .75rem; color: var(--mid); }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    /* ─────────────────────────────────────────
+       SEÇÕES – BASE COMPARTILHADA
+    ───────────────────────────────────────── */
+    section { padding: 100px 6vw; }
+
+    .section-label {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--mid);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 540px;
+    }
+
+    /* ─────────────────────────────────────────
+       BOTÕES GLOBAIS
+    ───────────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--teal);
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(42,191,191,.35);
+    }
+    .btn-primary:hover {
+      background: var(--teal-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(42,191,191,.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--teal);
+      color: var(--teal);
+      padding: 13px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-secondary:hover { background: var(--teal); color: #fff; }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      padding: 18px 40px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 30px rgba(37,211,102,.4);
+      transition: background .2s, transform .15s, box-shadow .2s;
+      position: relative;
+    }
+    .btn-whatsapp:hover {
+      background: #1ebe5d;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(37,211,102,.5);
+    }
+    .btn-whatsapp svg { width: 24px; height: 24px; fill: #fff; }
+
+    /* ─────────────────────────────────────────
+       SERVIÇOS
+    ───────────────────────────────────────── */
+    #servicos { background: #fff; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .service-card {
+      background: var(--cream);
+      border-radius: 24px;
+      padding: 36px 30px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+      border: 1px solid rgba(42,191,191,.12);
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--teal), var(--pink));
+    }
+    .service-icon { font-size: 2.4rem; margin-bottom: 18px; }
+    .service-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .service-card p  { font-size: .92rem; color: var(--mid); line-height: 1.6; }
+
+    /* ─────────────────────────────────────────
+       GALERIA DE FOTOS
+    ───────────────────────────────────────── */
+    #fotos { background: var(--cream); }
+
+    .photos-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .gallery-item {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1 / 1;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .4s;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    .gallery-item.wide { grid-column: span 2; }
+
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,144,144,.5) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      color: #fff;
+      font-weight: 600;
+      font-size: .9rem;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    /* ─────────────────────────────────────────
+       AVALIAÇÕES
+    ───────────────────────────────────────── */
+    #avaliacoes { background: #fff; }
+
+    .reviews-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 56px;
+    }
+
+    .rating-big {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--teal-light);
+      border-radius: 20px;
+      padding: 24px 32px;
+    }
+    .rating-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.6rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      line-height: 1;
+    }
+    .rating-stars { color: #f5b700; font-size: 1.5rem; letter-spacing: 2px; }
+    .rating-count { color: var(--mid); font-size: .9rem; margin-top: 4px; }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .review-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 28px;
+      border: 1px solid rgba(42,191,191,.12);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .review-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+    .review-stars { color: #f5b700; font-size: 1rem; margin-bottom: 14px; }
+    .review-text  {
+      font-size: .95rem;
+      color: var(--charcoal);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .review-author { display: flex; align-items: center; gap: 12px; }
+    .review-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--pink));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: .95rem;
+      flex-shrink: 0;
+    }
+    .review-name { font-weight: 600; font-size: .9rem; }
+    .review-meta { font-size: .78rem; color: var(--mid); }
+
+    /* ─────────────────────────────────────────
+       CONTATO
+    ───────────────────────────────────────── */
+    #contato {
+      background: linear-gradient(135deg, var(--teal-dark) 0%, #1a7a7a 100%);
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #contato::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    #contato .section-label { color: rgba(255,255,255,.7); }
+    #contato .section-title { color: #fff; }
+    #contato .section-sub   {
+      color: rgba(255,255,255,.75);
+      max-width: 500px;
+      margin: 0 auto 48px;
+    }
+
+    .contact-cards {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .contact-card {
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      padding: 28px 32px;
+      min-width: 200px;
+      transition: background .2s;
+    }
+    .contact-card:hover { background: rgba(255,255,255,.2); }
+    .contact-card .icon  { font-size: 2rem; margin-bottom: 10px; }
+    .contact-card p      { font-size: .85rem; opacity: .8; margin-bottom: 4px; }
+    .contact-card strong { font-size: 1rem; }
+    .contact-card a      { color: #fff; text-decoration: none; }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      padding: 28px 6vw;
+      font-size: .85rem;
+    }
+    footer strong { color: rgba(255,255,255,.9); }
+
+    /* ─────────────────────────────────────────
+       BOTÃO FLUTUANTE WHATSAPP
+    ───────────────────────────────────────── */
+    .float-wa {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      background: #25D366;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,.5);
+      text-decoration: none;
+      animation: pulse-wa 2.5s ease-in-out infinite;
+      transition: transform .2s;
+    }
+    .float-wa:hover { transform: scale(1.1); }
+    .float-wa svg   { width: 30px; height: 30px; fill: #fff; }
+
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,.5); }
+      50%       { box-shadow: 0 6px 40px rgba(37,211,102,.8); }
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVO
+    ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-visual  { display: none; }
+      .nav-links    { display: none; }
+      .hero-stats   { gap: 24px; }
+
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .gallery-item.wide { grid-column: span 2; }
+    }
+
+    @media (max-width: 600px) {
+      .gallery { grid-template-columns: 1fr; }
+      .gallery-item.wide { grid-column: span 1; }
+
+      .rating-big    { flex-direction: column; text-align: center; }
+      .contact-cards { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       BOTÃO FLUTUANTE WHATSAPP
+  ════════════════════════════════════════ -->
+  <a href="https://wa.me/5521965982833" target="_blank" class="float-wa" title="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ════════════════════════════════════════
+       NAVEGAÇÃO
+  ════════════════════════════════════════ -->
+  <nav>
+    <div class="nav-logo">Wan <span>Passear</span></div>
+
+    <div class="nav-links">
+      <a href="#servicos">Serviços</a>
+      <a href="#fotos">Fotos</a>
+      <a href="#avaliacoes">Avaliações</a>
+      <a href="#contato">Contato</a>
+    </div>
+
+    <a href="https://wa.me/5521965982833" target="_blank" class="nav-cta">Agendar agora</a>
+  </nav>
+
+  <!-- ════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-dots"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">Banho &amp; Tosa • Jardim Sulacap, RJ</div>
+
+      <h1>Cuidado e <em>amor</em><br>para o seu pet</h1>
+
+      <p class="hero-sub">
+        Banho, tosa, passeio e muito carinho para deixar o seu melhor amigo
+        feliz e fresquinho. Atendimento que você e seu pet merecem.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://wa.me/5521965982833" target="_blank" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Agendar pelo WhatsApp
+        </a>
+        <a href="#servicos" class="btn-secondary">Ver serviços</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">5,0</div>
+          <div class="stat-label">Nota no Google</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">430+</div>
+          <div class="stat-label">Avaliações</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Satisfação</div>
+        </div>
+      </div>
+    </div><!-- /hero-content -->
+
+    <div class="hero-visual">
+      <div class="hero-img-grid">
+        <img class="tall" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80" alt="Pet feliz">
+        <img src="gatoo.png" alt="Cachorro">
+        <img src="dogbanho.png" alt="Banho pet">
+      </div>
+      <div class="hero-img-pill">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p>Nota máxima</p>
+          <span>430 avaliações no Google</span>
+        </div>
+      </div>
+    </div><!-- /hero-visual -->
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SERVIÇOS
+  ════════════════════════════════════════ -->
+  <section id="servicos">
+    <div class="section-label">O que oferecemos</div>
+    <div class="section-title">Serviços com<br>carinho e cuidado</div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🛁</div>
+        <h3>Banho Completo</h3>
+        <p>Banho com produtos premium, secagem e escovação para deixar seu pet fresquinho e perfumado.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✂️</div>
+        <h3>Tosa Profissional</h3>
+        <p>Tosa higiênica ou no estilo que você preferir, feita com técnica e muito cuidado.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🦷</div>
+        <h3>Escovação Dental</h3>
+        <p>Higiene bucal para garantir a saúde dos dentes do seu melhor amigo.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💅</div>
+        <h3>Corte de Unhas</h3>
+        <p>Corte seguro e preciso das unhas, evitando desconforto para o pet e a família.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚗</div>
+        <h3>Taxi Dog</h3>
+        <p>Busca e entrega do seu pet com segurança e conforto direto na sua porta.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🐾</div>
+        <h3>Clubinho de Passeio</h3>
+        <p>Passeios supervisionados em grupo para socialização e alegria dos pets.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       GALERIA DE FOTOS
+  ════════════════════════════════════════ -->
+  <section id="fotos">
+    <div class="photos-intro">
+      <div>
+        <div class="section-label">Galeria</div>
+        <div class="section-title">Nossos clientes<br>especiais 🐶</div>
+      </div>
+      <a href="https://wa.me/5521965982833" target="_blank" class="btn-primary" style="height:fit-content">
+        Ver mais fotos
+      </a>
+    </div>
+
+    <div class="gallery">
+      <div class="gallery-item">
+        <img src="caca.png" alt="Passeio">
+        <div class="gallery-overlay">Banho</div>
+      </div>
+      <div class="gallery-item">
+        <img src="bulacha.png" alt="Cão feliz">
+        <div class="gallery-overlay">Pets felizes 💙</div>
+      </div>
+      <div class="gallery-item">
+        <img src="caco.png" alt="Banho">
+        <div class="gallery-overlay">Cuidado especial 🛁</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       AVALIAÇÕES
+  ════════════════════════════════════════ -->
+  <section id="avaliacoes">
+    <div class="reviews-header">
+      <div>
+        <div class="section-label">Avaliações</div>
+        <div class="section-title">O que nossos clientes<br>falam de nós</div>
+      </div>
+      <div class="rating-big">
+        <div class="rating-num">5,0</div>
+        <div>
+          <div class="rating-stars">★★★★★</div>
+          <div class="rating-count">430 avaliações no Google</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ótimos profissionais, excelente tratamento com os pets. São muito atenciosos e prestativos toda vez que levo minha cachorrinha para o banho e tosa. Trabalho excelente!"</p>
+        <div class="review-author">
+          <div class="review-avatar">L</div>
+          <div>
+            <div class="review-name">Larissa Sebadelhe</div>
+            <div class="review-meta">2 meses atrás · Google Maps</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Atendimento maravilhoso desde o primeiro contato no WhatsApp até a recepção dos meus cachorros pós banho e tosa. Foram muito bem tratados."</p>
+        <div class="review-author">
+          <div class="review-avatar">L</div>
+          <div>
+            <div class="review-name">Ligiane Lopes</div>
+            <div class="review-meta">3 meses atrás · Guia Local</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Gostaria de agradecer ao Wan Passear pelo carinho e cuidado que tiveram com nossos pets. Destaco o comprometimento da equipe e a excelência no banho, cortes de unhas e escovação dos dentes. Nota 10!"</p>
+        <div class="review-author">
+          <div class="review-avatar">E</div>
+          <div>
+            <div class="review-name">Eliseu De Melo</div>
+            <div class="review-meta">7 meses atrás · Google Maps</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Coloquei minha filha no clubinho e ela sempre volta para casa feliz. Atendimento top, super recomendo!"</p>
+        <div class="review-author">
+          <div class="review-avatar">C</div>
+          <div>
+            <div class="review-name">Cliente Wan Passear</div>
+            <div class="review-meta">Avaliação verificada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Já usei o serviço de banho com e sem taxi dog. Sempre muito atenciosos, pontuais e o resultado é sempre incrível. Meu pet sai amando!"</p>
+        <div class="review-author">
+          <div class="review-avatar">M</div>
+          <div>
+            <div class="review-name">Maria</div>
+            <div class="review-meta">Avaliação verificada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Empresa de empreendedoras incríveis! Tratam cada pet como se fosse da família. Melhor pet shop da região com toda certeza."</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div>
+            <div class="review-name">Ana Paula</div>
+            <div class="review-meta">Avaliação verificada</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /reviews-grid -->
+  </section>
+
+  <!-- ════════════════════════════════════════
+       CONTATO
+  ════════════════════════════════════════ -->
+  <section id="contato">
+    <div class="section-label">Fale conosco</div>
+    <div class="section-title">Agende agora mesmo</div>
+    <p class="section-sub">
+      Entre em contato pelo WhatsApp e agende o melhor horário para o seu pet.
+      Estamos prontos para atender você!
+    </p>
+
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="icon">📍</div>
+        <p>Endereço</p>
+        <strong>Av. Albérico Diniz, 2179<br>Jardim Sulacap, RJ</strong>
+      </div>
+      <div class="contact-card">
+        <div class="icon">📞</div>
+        <p>Telefone / WhatsApp</p>
+        <strong><a href="tel:+5521965982833">(21) 96598-2833</a></strong>
+      </div>
+      <div class="contact-card">
+        <div class="icon">🕐</div>
+        <p>Horário de atendimento</p>
+        <strong>Abre às 8h · Fecha às 18h</strong>
+      </div>
+    </div>
+
+    <a href="https://wa.me/5521965982833?text=Olá!%20Gostaria%20de%20agendar%20um%20serviço%20para%20meu%20pet%20😊"
+       target="_blank"
+       class="btn-whatsapp">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Falar no WhatsApp agora
+    </a>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer>
+    <p>© 2025 <strong>Wan Passear Banho e Tosa</strong> · Jardim Sulacap, Rio de Janeiro – RJ · (21) 96598-2833</p>
+    <p style="margin-top:8px">Feito com 💙 para os pets e seus tutores</p>
+  </footer>
+
+</body>
+</html>
